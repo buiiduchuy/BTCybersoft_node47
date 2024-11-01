@@ -31,8 +31,19 @@ const rateResByUser = async (req, res) => {
     }
 }
 
-const rateRes = (req, res) => {
-    return res.status(200).json({message: "rateRes"});
+const rateRes = async (req, res) => {
+    try {
+        let {user_id,amount,res_id} = req.body
+        await model.rate_res.create({
+            user_id:user_id,
+            res_id: res_id,
+            amount:amount
+        })
+        console.log('first',user_id,amount,res_id)
+        // return res.status(201).json({message: "Create rate res success"})
+    } catch (error) {
+        return res.status(500).json({message: "create rate res fail"})
+    }
 }
 
 export {
